@@ -2,8 +2,8 @@ import { Controller, NotImplementedException, ParseUUIDPipe } from '@nestjs/comm
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { OrdersService } from './orders.service';
 import { CreateOrderDto } from './dto/create-order.dto';
-import { UpdateOrderDto } from './dto/update-order.dto';
 import { PaginationOrderDto } from './dto/pagination-order.dto';
+import { ChangeOrderStatusDto } from './dto';
 
 @Controller()
 export class OrdersController {
@@ -25,7 +25,7 @@ export class OrdersController {
   }
 
   @MessagePattern({cmd: 'updateOrder'})
-  changeOrderStatus(@Payload() updateOrderDto: UpdateOrderDto) {
-    throw new NotImplementedException();
+  changeOrderStatus(@Payload() changeOrderStatusDto: ChangeOrderStatusDto) {
+    return this.ordersService.changeStatus(changeOrderStatusDto)
   }
 }
